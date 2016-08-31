@@ -1,0 +1,82 @@
+1.Echo er aðeins hraðari en print. Echo getur takið inn meiri en einn parametra. Print er með return value en ekki Echo, return valuið er 1
+2.Einn gæsalöp tekur ekki inn variables en tvær gera það 
+$Chu = "Train";
+echo 'This is a $Chu.'; 
+echo "This is a $Chu.";
+3.
+Það er breyta sem notað til að ná í Global variables hvar sem þau eru í kóðanum
+4. mjög líkir einni munurinn er að === er meira nækvæmari en ==
+$x = 100;  
+$y = "100";
+var_dump($x == $y);//Hérna kemur út TRUE
+ var_dump($x === $y);//Hérna ekki
+5.Leyfir þér að breyta texta án þess að nota function, virkar líkt of að nota Echo og function saman.
+Þú getur lát streng alltaf byrtist sem strengir með því að not printf of %u
+6.
+$a = 1;// Sets a to one
+$b = $a++;/Makes b same value as a then increments
+$c = ++$a;/Increments then sets c to the value of a 
+echo $a . $b . $c;//Echos 313 
+7.
+           $array = array("a","b",array("d","e"),"f");
+           $result = count($array, COUNT_RECURSIVE);
+           
+           print $result;
+8.
+        $cities = array("Japan"=>"Tokyo","Mexico"=>"Mexico City","Usa"=>"New York","Korea"=>"Seoul","India"=>"Mumbai","China"=>"Shanghai");
+        foreach($cities as $x => $x_value) {
+        echo "Country=" . $x . ",<br> City=" . $x_value;
+        echo "<br>";
+        echo "<br>";
+        }
+9.
+$colors = array("red","blue","green");
+
+list($a, $b, $c) = $colors;
+echo "My favorite colors are, $a, $b and $c.";
+10.
+ $states = array("Texas", "Ohio"); 
+array_push($states, "New York");
+array_unshift($states, "California");
+print_r ($states)
+11.
+shuffle($states);
+Array ( [0] = New York [1] = Texas [2] = California [3] = Ohio )
+12.
+      <?php
+         $products = array( array ( "08:10", "10:30", "13:15"), array ( "GSÖ2B2U", "VSH2B2U",
+"FOR2B2U"), array ( "GUS", "GJG", "GRL") );
+        ?>
+<?php if (count($products) > 0): ?>
+<table>
+  <thead>
+    <tr>
+      <th><?php echo ('</th><th>'); ?></th>
+    </tr>
+  </thead>
+  <tbody>
+<?php foreach ($products as $row): array_map('htmlentities', $row); ?>
+    <tr>
+      <td><?php echo implode('</td><td>', $row); ?></td>
+    </tr>
+<?php endforeach; ?>
+  </tbody>
+</table>
+<?php endif; ?>
+13.
+         <?php
+    $customers[] = array("Jason Gilmore", "jason@example.com", "614-999-9999");
+    $customers[] = array("Jesse James", "jesse@example.net", "818-999-9999");
+    $customers[] = array("Donald Duck", "donald@example.org", "212-999-9999");
+    foreach ($customers as $value) {
+    
+    vprintf("Name: %s<br />Email: %s  <br />Phone: %s <br />",array($value[0],$value[1],$value[2]));
+    }
+    ?>
+14.
+Sor()
+Settur JPG 10 í fyrsta sæti en því það er stór stafur í því
+Natcase 
+Sortar þetta venjulega og skóðar ekki hvort það eru stórir stafir
+pic1.jpg pic2.jpg PIC10.jpg pic20.jpg
+15.
