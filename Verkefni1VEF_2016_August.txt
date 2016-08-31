@@ -83,4 +83,5 @@ pic1.jpg pic2.jpg PIC10.jpg pic20.jpg
 Það þýðir Hypertext Transfer Protocol
 Stateless þýðir það bara að hver skipun er einstæð öðrum skipunum og
 Eru með nóg upplýsingar á sér svo hver fyrirspurn þarf ekki annari á að halda
+16.
 
