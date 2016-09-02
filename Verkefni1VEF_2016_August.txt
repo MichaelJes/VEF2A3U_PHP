@@ -84,4 +84,11 @@ pic1.jpg pic2.jpg PIC10.jpg pic20.jpg
 Stateless þýðir það bara að hver skipun er einstæð öðrum skipunum og
 Eru með nóg upplýsingar á sér svo hver fyrirspurn þarf ekki annari á að halda
 16.
+Http er skeman
+// er til þess að apskylja Skemuna og domainið
+www er sub domain af main domaininu
+tskoli er domainið
+.is er landa kóða domain sem set á eftir öllu 
+17.
+Það er aðferð notuð í vefforitun, Það virkar þannig að hver einasti notandi síðurna fær sína eigin sér tilbúinn gerð af síðunni í staðinn fyrir að allir fengu bara sömu stöku síðuna
 
