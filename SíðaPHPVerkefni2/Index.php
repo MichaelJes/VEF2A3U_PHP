@@ -1,13 +1,21 @@
 <?php include './includes/title.php'; ?>
+<?php include './includes/random_image.php'; ?>
 <!doctype html>
 <html lang="en">
 <?php require './Includes/Head.php'; ?>
-<title>Landing Page<?php echo "&#8212;{$title}"; ?></title>
+<title>Landing Page <?php if (isset($title))  echo "&#8212;{$title}"; ?></title>
 <body>
 <?php require './Includes/Menu.php'; ?>
+<style>
+.splash-container
+{
+    background-image: url(<?= $selectedImage; ?>);
+}
 
+</style>
 
 <div class="splash-container">
+
     <div class="splash">
         <h1 class="splash-head">Juice</h1>
         <p class="splash-subhead">
