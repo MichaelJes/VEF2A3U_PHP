@@ -1,3 +1,20 @@
+<?php
+$errors = [];
+$missing = [];
+// check if the form has been submitted
+if (isset($_POST['submit'])) {
+  
+  /* to prevent an attacker from injecting other variables in
+     the $_POST array in an attempt to overwrite your default values. By processing only those variables
+     that you expect, your form is much more secure.
+  */
+    // list expected fields
+    $expected = ['name', 'email', 'password'];
+    $required = ['name', 'password', 'email'];
+    // sækjum skrá sem vinnur með input gögnin úr formi, $_POST[]
+    require './includes/process.php';
+}
+?>
 <?php include './includes/title.php'; ?>
 <?php include './includes/random_image.php'; ?>
 <!doctype html>
@@ -92,20 +109,26 @@
 
         <div class="pure-g">
             <div class="l-box-lrg pure-u-1 pure-u-md-1-2">
-                <form class="pure-form pure-form-stacked" method="post" action="<?=$_SERVER['PHP_SELF']?>">
+                <form class="pure-form pure-form-stacked" method="post" action="">
                     <fieldset>
                         <label for="name">Your Name</label>
-                        <input id="name" type="text" placeholder="Your Name">
+                        <input name="name" id="name" type="text" placeholder="Your Name">
 
                         <label for="email">Your Email</label>
-                        <input id="email" type="email" placeholder="Your Email">
+                        <input name="email" id="email" type="email" placeholder="Your Email">
 
                         <label for="password">Your Password</label>
-                        <input id="password" type="password" placeholder="Your Password">
+                        <input name="password" id="password" type="password" placeholder="Your Password">
 
-                        <button  type="submit"  class="pure-button">Sign Up</button>
+                        <button name="submit" type="submit"  class="pure-button">Sign Up</button>
+                        <?php if ($missing) {
+                        print("Það er villa í forminu þínu");
+                        } ?>
                     </fieldset>
                 </form>
+            <pre>
+            <?php if ($_POST) { print_r($_POST); } ?>
+            </pre>
             </div>
             
             <div class="l-box-lrg pure-u-1 pure-u-md-1-2">
@@ -117,6 +140,7 @@
                     <button type="submit"  name="submit" value="Login" class="pure-button pure-button-primary">Sign in</button>
                 </fieldset>
             </form>
+
             </div>
         </div>
     </div>
