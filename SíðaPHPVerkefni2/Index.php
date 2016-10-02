@@ -1,8 +1,23 @@
+
+<?php
+
+$error = '';
+if (isset($_POST['login'])) {
+ session_start();
+ $username = $_POST['username'];
+ $password = $_POST['pwd'];
+ // location of usernames and passwords
+ $userlist = './private/users.csv';
+ // location to redirect on success
+ $redirect = 'http://tsuts.tskoli.is/2t/3108982369/PHP/menu.php';
+ require_once './includes/authenticate.php';
+}
+?>
 <?php
 $errors = [];
 $missing = [];
 // check if the form has been submitted
-if (isset($_POST['submit'])) {
+if (isset($_POST['register'])) {
   
   /* to prevent an attacker from injecting other variables in
      the $_POST array in an attempt to overwrite your default values. By processing only those variables
@@ -14,7 +29,11 @@ if (isset($_POST['submit'])) {
     // sækjum skrá sem vinnur með input gögnin úr formi, $_POST[]
     require './includes/process.php';
 }
+
+
+
 ?>
+
 <?php include './includes/title.php'; ?>
 <?php include './includes/random_image.php'; ?>
 <!doctype html>
@@ -120,24 +139,31 @@ if (isset($_POST['submit'])) {
                         <label for="password">Your Password</label>
                         <input name="password" id="password" type="password" placeholder="Your Password">
 
-                        <button name="submit" type="submit"  class="pure-button">Sign Up</button>
+                        <button name="register" type="submit"  class="pure-button">Sign Up</button>
                         <?php if ($missing) {
                         print("Það er villa í forminu þínu");
                         } ?>
                     </fieldset>
                 </form>
             <pre>
-            <?php if ($_POST) { print_r($_POST); } ?>
             </pre>
             </div>
+
             
+            <!--Login HERE!-->
             <div class="l-box-lrg pure-u-1 pure-u-md-1-2">
-            <form class="pure-form pure-form-stacked">
+            <?php
+            if ($error) {
+             echo "<p>$error</p>";
+            } elseif (isset($_GET['expired'])) { ?>
+             <p>Your session has expired. Please log in again.</p>
+            <?php } ?>
+            <form class="pure-form pure-form-stacked" method="post" action="">
                 <fieldset>
                     <label for="Login">Please sign in here</label>
-                    <input type="email" placeholder="Email">
-                    <input type="password" placeholder="Password">
-                    <button type="submit"  name="submit" value="Login" class="pure-button pure-button-primary">Sign in</button>
+                    <input type="email" name="username" id="username" placeholder="Email">
+                    <input type="password" name="pwd" id="pwd" placeholder="Password">
+                    <button type="submit"  name="login" value="Log in" class="pure-button pure-button-primary">Sign in</button>
                 </fieldset>
             </form>
 
