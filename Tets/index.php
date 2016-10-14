@@ -30,6 +30,7 @@ if (isset($_POST['send'])) {
         <?php if ($missing || $errors) { ?>
             <p class="warning">Please fix the item(s) indicated.</p>
         <?php } ?>
+        
         <form method="post" action="">
             <p>
                 <label for="name">Name:
