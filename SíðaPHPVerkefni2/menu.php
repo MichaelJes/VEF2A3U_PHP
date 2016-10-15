@@ -1,6 +1,6 @@
 <?php include './includes/session_timeout.php'; ?>
 <?php
-
+use File\Upload;
 
 // run this script only if the logout button has been clicked
 if (isset($_POST['logout'])) {
@@ -18,8 +18,19 @@ if (isset($_POST['logout'])) {
 if (isset($_POST['upload'])) {
 	// define the path to the upload folder
  $destination = $_SERVER['DOCUMENT_ROOT'] . "/2t/3108982369/PHP/userImg/";
+ require_once 'File/Upload.php';
  // move the file to the upload folder and rename it
- move_uploaded_file($_FILES['image']['tmp_name'], $destination . $_FILES['image']['name']);
+     try {
+        // búum til upload object til notkunar.  Sendum argument eða slóðina að upload möppunni sem á að geyma skrá
+        $loader = new Upload($destination);
+        // köllum á og notum move() fallið sem færir skrá í upload möppu, þurfum að gera þetta strax.
+        $loader->upload();
+        // köllum á getMessage til að fá skilaboð (error or not).
+        $result = $loader->getMessages();
+
+    } catch (Exception $e) {
+        echo $e->getMessage();  # ef við náum ekki að nota Upload class
+    }
  }
 ?>
 <!DOCTYPE HTML>
@@ -30,6 +41,17 @@ if (isset($_POST['upload'])) {
 </head>
 
 <body>
+    <?php
+        // Keyrir bara ef það er búið að smella á submit 
+        if (isset($result)) {
+            echo '<ul>';
+            //  Birta skilboðin úr messages array (Upload class).
+            foreach ($result as $message) {
+                echo "<li>$message</li>";
+            }
+            echo '</ul>';
+        }
+    ?>
 <h1>Please Upload your files here!</h1>
 <form action="" method="post" enctype="multipart/form-data" id="uploadImage">
 	 <p>
@@ -42,8 +64,9 @@ if (isset($_POST['upload'])) {
 </form>
 
 <p><a href="secretpage.php">Another secret page</a> </p>
+
 <form method="post" action="">
- <input name="logout" type="submit" value="Log out">
+	 	<input name="logout" type="submit" value="Log out">
 </form>
 </body>
 </html>

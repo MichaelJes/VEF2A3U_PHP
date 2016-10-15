@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	</head>
+	<body>
+        <p>
+                      <?php
+            class Bok
+            {
+                protected  $titill;
+                protected  $verd;
+                public function __construct ($title,$price) {
+                $this->titill = $title;
+                $this->verd = $price;
+                }
+                function setPrice($price) {
+                    $verd = $price;
+                }
+                function getPrice() {
+                    return $this->verd;
+                }
+                function setTitle($title) {
+                    $titill = $title;
+                }
+                function getTitle() {
+                   return $this->titill;
+                }
+            }
+            class Boker extends Bok
+            {
+                protected $publisher;
+                public function __construct ($him,$title,$price) {
+                $this->publisher = $him;
+                $this->titill = $title;
+                $this->verd = $price;
+                }
+                function getPublisher() {
+                    return $this->publisher;
+                }
+                function setPublisher($him) {
+                    $publisher = $him;
+                }
+                function summary()
+                {
+                    echo 'Title: '      . $this->titill        . PHP_EOL;
+                    echo 'Price: '     . $this->verd     . PHP_EOL;
+                    echo 'Publisher: '  . $this->publisher    . PHP_EOL;
+                    echo "<br>";
+                }
+            }
+        $efnafraedi = new Boker("William","Lögmál náturu",1011);
+		$staerdfraedi= new Boker("Jonthan","Stæ 501",11);
+		$islenska = new Boker("Samuel","Ljóð og Álfar",3000);
+        echo $islenska->summary();
+        echo $staerdfraedi->summary();
+        echo $efnafraedi->summary();
+          ?>
+        </p>
+	</body>
+</html>

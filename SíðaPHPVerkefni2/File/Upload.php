@@ -16,4 +16,29 @@
 	 }
 	 $this->destination = $path;
 	 }
+	public function upload() {
+	 	$uploaded = current($_FILES);
+	 	if ($this->checkFile($uploaded)) {
+	 		$this->moveFile($uploaded);
+	 	}
+	 }
+	 protected function checkFile($file) {
+ 		return true;
+ 	}
+ 	protected function moveFile($file) {
+		 $success = move_uploaded_file($file['tmp_name'],
+		 $this->destination . $file['name']);
+		 if ($success) {
+		 $result = $file['name'] . ' was uploaded successfully';
+		 $this->messages[] = $result;
+		 } else {
+ 		$this->messages[] = 'Could not upload ' . $file['name'];
+ 		}		
+ 	}
+ 	public function getMessages() {
+ 		return $this->messages;
+ 	}
+
+
+
  }
