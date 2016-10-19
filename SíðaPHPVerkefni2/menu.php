@@ -23,7 +23,6 @@ if (isset($_POST['upload'])) {
      try {
         // búum til upload object til notkunar.  Sendum argument eða slóðina að upload möppunni sem á að geyma skrá
         $loader = new Upload($destination);
-        $loader->allowAllTypes();
         // köllum á og notum move() fallið sem færir skrá í upload möppu, þurfum að gera þetta strax.
         $loader->upload();
         // köllum á getMessage til að fá skilaboð (error or not).
