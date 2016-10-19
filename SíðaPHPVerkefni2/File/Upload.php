@@ -1,6 +1,8 @@
 <?php
  namespace File;
+
  class Upload {
+
  	 protected $renameDuplicates;
  	 protected $typeCheckingOn = true;
  	 protected $notTrusted = ['bin', 'cgi', 'exe', 'js', 'pl', 'php', 'py', 'sh'];
@@ -26,7 +28,7 @@
 	 	$uploaded = current($_FILES);
 	 	if (is_array($uploaded['name'])) {
  		foreach ($uploaded['name'] as $key => $value) {
-			 $currentFile['name'] = $uploaded['name'][$key];
+			$currentFile['name'] = $uploaded['name'][$key];
 			$currentFile['type'] = $uploaded['type'][$key];
 			$currentFile['tmp_name'] = $uploaded['tmp_name'][$key];
 			$currentFile['error'] = $uploaded['error'][$key];
@@ -69,11 +71,11 @@
  	}
  	protected function moveFile($file) {
  		 $filename = isset($this->newName) ? $this->newName : $file['name'];
-		 $success = move_uploaded_file($file['tmp_name'],
-		 $this->destination . $filename);
+		 $success = move_uploaded_file($file['tmp_name'], $this->destination . $filename);
 		 if ($success) {
 
-		 	$result = $file['name'] ."<br>" . ' Type: ' . $file['type'] ."<br>" . ' Size: ' . $file['size'] ."<br>" .' Was uploaded successfully';
+		 	//$result = $file['name'] ."<br>" . ' Type: ' . $file['type'] ."<br>" . ' Size: ' . $file['size'] ."<br>" .' Was uploaded successfully';
+		 	$result = $file['name'] . ' was uploaded successfully';
 		 	if (!is_null($this->newName)) {
 			 	$result .= ', and was renamed ' . $this->newName;
 			 }
@@ -167,11 +169,7 @@
 				 $this->newName .= ".$extension";
 				 }
 				 } while (in_array($this->newName, $existing));
-		 }
-	 }
+			 }
+	 	}
  	}
-
-
-
-
  }
