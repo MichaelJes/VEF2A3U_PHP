@@ -16,6 +16,7 @@ if (isset($_POST['logout'])) {
  exit;
 }
 if (isset($_POST['upload'])) {
+    
 	// define the path to the upload folder
  $destination = $_SERVER['DOCUMENT_ROOT'] . "/2t/3108982369/PHP/userImg/";
  require_once 'File/Upload.php';
@@ -53,7 +54,7 @@ if (isset($_POST['upload'])) {
         }
     ?>
 <h1>Please Upload your files here!</h1>
-<form action="" method="post" enctype="multipart/form-data" id="uploadImage">
+<form action="" method="POST" enctype="multipart/form-data" id="uploadImage">
 	 <p>
 	 <label for="image">Upload image:</label>
 	 <input type="file" name="image[]" id="image" multiple>
@@ -68,5 +69,12 @@ if (isset($_POST['upload'])) {
 <form method="post" action="">
 	 	<input name="logout" type="submit" value="Log out">
 </form>
+<pre>
+<?php
+if (isset($_POST['upload'])) {
+  print_r($_FILES);
+}
+?>
+</pre>
 </body>
 </html>
