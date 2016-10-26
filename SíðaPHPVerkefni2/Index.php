@@ -1,19 +1,27 @@
 ﻿
-<?php
+<?php 
+require_once './includes/connection.php';
+require_once './includes/Users.php';
+$dbUsers = new Users($conn);
 
 $error = '';
 if (isset($_POST['login'])) {
  session_start();
-
  $username = trim($_POST['username']);
  $password = trim($_POST['password']);
- require_once './includes/connection.php';
- require_once './includes/Users.php';
+
  // location of usernames and passwords
- $userlist = './private/users.csv';
+ $validate_status = $dbUsers->validateUser($username,$password);
+ if ($validate_status) {
+    $redirect = 'http://tsuts.tskoli.is/2t/3108982369/PHP/menu.php';
+    require_once './includes/authenticate.php';
+     exit();
+ }
+
+ //$userlist = './private/users.csv';
  // location to redirect on success
- $redirect = 'http://tsuts.tskoli.is/2t/3108982369/PHP/menu.php';
- require_once './includes/authenticate.php';
+ //$redirect = 'http://tsuts.tskoli.is/2t/3108982369/PHP/menu.php';
+ //require_once './includes/authenticate.php';
 }
 ?>
 <?php
@@ -33,7 +41,7 @@ if (isset($_POST['register'])) {
      the $_POST array in an attempt to overwrite your default values. By processing only those variables
      that you expect, your form is much more secure.
   */
-    $dbUsers = new Users($conn);
+    
     $status = $dbUsers->newUser($firstname,$lastname,$email,$username,$password);
 
     if ($status) {
