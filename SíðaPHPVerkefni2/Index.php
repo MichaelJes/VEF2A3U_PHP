@@ -4,8 +4,11 @@
 $error = '';
 if (isset($_POST['login'])) {
  session_start();
- $username = $_POST['username'];
- $password = $_POST['pwd'];
+
+ $username = trim($_POST['username']);
+ $password = trim($_POST['password']);
+ require_once './includes/connection.php';
+ require_once './includes/Users.php';
  // location of usernames and passwords
  $userlist = './private/users.csv';
  // location to redirect on success
@@ -19,10 +22,25 @@ $missing = [];
 // check if the form has been submitted
 if (isset($_POST['register'])) {
   
+    $firstname = trim($_POST['firstname']);
+    $lastname = trim($_POST['lastname']);
+    $email = trim($_POST['email']);
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+    require_once './includes/connection.php';
+    require_once './includes/Users.php';
   /* to prevent an attacker from injecting other variables in
      the $_POST array in an attempt to overwrite your default values. By processing only those variables
      that you expect, your form is much more secure.
   */
+    $dbUsers = new Users($conn);
+    $status = $dbUsers->newUser($firstname,$lastname,$email,$username,$password);
+
+    if ($status) {
+        $success = "$username has been registered. You may now log in.";
+    }else{
+        $errors[] = "$username is already in use. Please choose another username.";
+    }
     // list expected fields
     $expected = ['name', 'email', 'password'];
     $required = ['name', 'password', 'email'];
@@ -130,16 +148,22 @@ if (isset($_POST['register'])) {
             <div class="l-box-lrg pure-u-1 pure-u-md-1-2">
                 <form class="pure-form pure-form-stacked" method="post" action="">
                     <fieldset>
-                        <label for="name">Your Name</label>
-                        <input name="name" id="name" type="text" placeholder="Your Name">
+                        <label for="username">Firstname:</label>
+                        <input type="text" name="firstname" id="firstname" placeholder="First name" required>
 
-                        <label for="email">Your Email</label>
-                        <input name="email" id="email" type="email" placeholder="Your Email">
+                        <label for="username">Lastname:</label>
+                        <input type="text" name="lastname" id="lastname" placeholder="Last name" >
 
-                        <label for="password">Your Password</label>
-                        <input name="password" id="password" type="password" placeholder="Your Password">
+                        <label for="email">Email</label>
+                        <input name="email" id="email" type="email" placeholder="Your Email" required>
 
-                        <button name="register" type="submit"  class="pure-button">Sign Up</button>
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" id="username" placeholder="Username" required>
+
+                        <label for="password">Password</label>
+                        <input name="password" id="password" type="password" placeholder="Your Password" required>
+
+                        <button name="register" type="submit" id="register" value="Register"  class="pure-button">Sign Up</button>
                         <?php if ($missing) {
                         print("Það er villa í forminu þínu");
                         } ?>
@@ -161,8 +185,8 @@ if (isset($_POST['register'])) {
             <form class="pure-form pure-form-stacked" method="post" action="">
                 <fieldset>
                     <label for="Login">Please sign in here</label>
-                    <input type="email" name="username" id="username" placeholder="Email">
-                    <input type="password" name="pwd" id="pwd" placeholder="Password">
+                    <input type="text" name="username" id="username" placeholder="Username">
+                    <input type="password" name="password" id="password" placeholder="Password">
                     <button type="submit"  name="login" value="Log in" class="pure-button pure-button-primary">Sign in</button>
                 </fieldset>
             </form>
