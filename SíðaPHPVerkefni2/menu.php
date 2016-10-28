@@ -1,4 +1,10 @@
-<?php include './includes/session_timeout.php'; ?>
+<?php 
+include './includes/session_timeout.php'; 
+require_once './includes/connection.php';
+require 'File/Upload.php';
+require './includes/Users.php';
+$dbUsers = new Users($conn);
+?>
 <?php
 use File\Upload;
 
@@ -15,17 +21,17 @@ if (isset($_POST['logout'])) {
  header('Location: http://tsuts.tskoli.is/2t/3108982369/PHP/index.php');
  exit;
 }
-if (isset($_POST['upload'])) {
-    
+if (isset($_POST['upload'])) { 
 	// define the path to the upload folder
  $destination = $_SERVER['DOCUMENT_ROOT'] . "/2t/3108982369/PHP/userImg/";
- require_once 'File/Upload.php';
+ 
  // move the file to the upload folder and rename it
      try {
         // búum til upload object til notkunar.  Sendum argument eða slóðina að upload möppunni sem á að geyma skrá
         $loader = new Upload($destination);
         // köllum á og notum move() fallið sem færir skrá í upload möppu, þurfum að gera þetta strax.
         $loader->upload();
+        $validate = $dbUsers->newImageInfo('kisa_min_001','images/unprocessed','Flott mynd af kisu',7);
         // köllum á getMessage til að fá skilaboð (error or not).
         $result = $loader->getMessages();
 

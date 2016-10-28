@@ -2,7 +2,6 @@
  namespace File;
 
  class Upload {
-
  	 protected $renameDuplicates;
  	 protected $typeCheckingOn = true;
  	 protected $notTrusted = ['bin', 'cgi', 'exe', 'js', 'pl', 'php', 'py', 'sh'];
@@ -19,10 +18,11 @@
 	 ];
 	 public function __construct($path) {
 	 if (!is_dir($path) || !is_writable($path)) {
-	 throw new \Exception("$path must be a valid,writable directory.");
+		 throw new \Exception("$path must be a valid,writable directory.");
 	 }
-	 $this->destination = $path;
+		 $this->destination = $path;
 	 }
+
 	public function upload($renameDuplicates = true) {
 		$this->renameDuplicates = $renameDuplicates;
 	 	$uploaded = current($_FILES);
@@ -73,7 +73,6 @@
  		 $filename = isset($this->newName) ? $this->newName : $file['name'];
 		 $success = move_uploaded_file($file['tmp_name'], $this->destination . $filename);
 		 if ($success) {
-
 		 	$result = $file['name'] ."<br>" . ' Type: ' . $file['type'] ."<br>" . ' Size: ' . $file['size'] ."<br>" .' Was uploaded successfully';
 		 	
 		 	if (!is_null($this->newName)) {
