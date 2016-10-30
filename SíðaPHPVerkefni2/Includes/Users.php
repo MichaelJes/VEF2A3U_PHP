@@ -72,6 +72,7 @@
 				return false;
 			}
 		}
+
 		
 		/**
 		*	@function name:  getUser
@@ -303,6 +304,26 @@
 			
 			return $ret;
 		}
+		public function newImageInfo($name,$path,$text,$category)
+		{
+			$statement = $this->connection->prepare('call NewImage(?,?,?,?)');
+			$statement->bindParam(1,$name);
+			$statement->bindParam(2,$path);
+			$statement->bindParam(3,$text);
+			$statement->bindParam(4,$category);
+			
+			try 
+			{
+				$statement->execute();
+				
+				return true;
+			}
+			catch(PDOException $e)
+			{
+				return false;
+			}
+		}
+
 	
 		
 	}
