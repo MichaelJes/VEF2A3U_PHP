@@ -1,5 +1,6 @@
 <?php
-
+	class Image
+	{
 		private $connection; // for PDO connection inside the class
 	
 		/**
@@ -342,3 +343,4 @@
 				return array();
 			}
 		}
+	}

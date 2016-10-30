@@ -1,5 +1,6 @@
 <?php
  namespace File;
+require_once 'connection.php';
 
  class Upload {
  	 protected $renameDuplicates;
@@ -16,6 +17,7 @@
 	 'image/pjpeg',
 	 'image/png'
 	 ];
+
 	 public function __construct($path) {
 	 if (!is_dir($path) || !is_writable($path)) {
 		 throw new \Exception("$path must be a valid,writable directory.");
@@ -74,7 +76,7 @@
 		 $success = move_uploaded_file($file['tmp_name'], $this->destination . $filename);
 		 if ($success) {
 		 	$result = $file['name'] ."<br>" . ' Type: ' . $file['type'] ."<br>" . ' Size: ' . $file['size'] ."<br>" .' Was uploaded successfully';
-		 	
+		 	$Nitch = true;
 		 	if (!is_null($this->newName)) {
 			 	$result .= ', and was renamed ' . $this->newName;
 			 }
