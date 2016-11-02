@@ -24,7 +24,6 @@ require_once 'connection.php';
 	 }
 		 $this->destination = $path;
 	 }
-
 	public function upload($renameDuplicates = true) {
 		$this->renameDuplicates = $renameDuplicates;
 	 	$uploaded = current($_FILES);
@@ -76,7 +75,7 @@ require_once 'connection.php';
 		 $success = move_uploaded_file($file['tmp_name'], $this->destination . $filename);
 		 if ($success) {
 		 	$result = $file['name'] ."<br>" . ' Type: ' . $file['type'] ."<br>" . ' Size: ' . $file['size'] ."<br>" .' Was uploaded successfully';
-		 	$Nitch = true;
+		 	
 		 	if (!is_null($this->newName)) {
 			 	$result .= ', and was renamed ' . $this->newName;
 			 }

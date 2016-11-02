@@ -36,7 +36,13 @@ if (isset($_POST['upload'])) {
         $loader->upload();
         
         // köllum á getMessage til að fá skilaboð (error or not).
+        
+
+
         $result = $loader->getMessages();
+
+
+
         $Validali = $dbUsers->newImageInfo($namo,$destination.$namo,substr($namo,0,-4),1); 
         if($Validali) {    
             print("You did it");
