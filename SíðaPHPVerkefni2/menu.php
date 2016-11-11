@@ -73,7 +73,7 @@ if (isset($_POST['upload'])) {
             ?>
             <pre>
             <?php
-            print_r($resulto);
+            //print_r($resulto);
             ?>
             </pre>
             <?php
@@ -82,11 +82,14 @@ if (isset($_POST['upload'])) {
         {
             echo "No";
         }
-        $mainImage = $resulto[3][0];
+        if (isset($_GET['image'])) {
+         $mainImage = $_GET['image'];
+        } else {
+         $mainImage = $resulto[3][0];
+        }
         $PathwayToFile = $resulto[3][1];
-        print($PathwayToFile);
         // get the dimensions of the main image
-        $imageSize = getimagesize($PathwayToFile)[3];
+        $imageSize = getimagesize($mainImage)[3];
 
         // Keyrir bara ef það er búið að smella á submit 
         if (isset($result)) {
@@ -129,13 +132,13 @@ if (isset($_POST['upload'])) {
                         $isFirst = ($i == 0);
                         $isLast = ($i == $last);
                     ?>
-                    <td><a href="http://tsuts.tskoli.is/2t/3108982369/PHP/<?= $resulto[$i][1]; ?>"><img src="<?= $resulto[$i][1]; ?>"" alt="<?= $resulto[$i][0]; ?>" width="80" height="54"></a></td>
+                    <td><a href="<?= $_SERVER['PHP_SELF']; ?>?image=<?= $resulto[$i][1]; ?>"><img src="<?= $resulto[$i][1]; ?>"" alt="<?= $resulto[$i][0]; ?>" width="80" height="54"></a></td>
                     <?php } ?>
                 </tr>
                 <!-- Navigation link needs to go here -->
             </table>
             <figure id="main_image">
-                <img src="<?= $PathwayToFile; ?>" alt="<?= $mainImage; ?>"<?= $imageSize; ?>>
+                <img src="<?= $mainImage; ?>" alt="<?= $mainImage; ?>"<?= $imageSize; ?>>
                 <figcaption><?= $mainImage; ?></figcaption>
             </figure>
         </div>
