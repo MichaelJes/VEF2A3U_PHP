@@ -1,5 +1,11 @@
 <?php 
 include './includes/session_timeout.php'; 
+define('COLS', 2);
+// initialize variables for the horizontal looper
+$pos = 0;
+$firstRow = true;
+// set maximum number of records
+define('SHOWMAX', 6);
 require_once './includes/connection.php';
 $sql = 'SELECT imagename, imagetext FROM images';
 
@@ -60,36 +66,30 @@ if (isset($_POST['upload'])) {
 ?>
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <meta charset="utf-8">
-    <title>The file upload Area</title>
+    <?php require './Includes/Head.php'; ?>
+    <link rel="stylesheet" type="text/css" href="./css/Zeal.css">
+    <title>Upload Page <?php if (isset($title))  echo "&#8212;{$title}"; ?></title>
 </head>
 
 <body>
+<div class="pure-g">
+    <div class="l-box pure-u-1 pure-u-md-1 pure-u-lg-1">
+        <?php require './Includes/Menu.php'; ?>
+    </div>
+</div>
     <?php
         $resulto = $dbUsers->imagelist();
-        if ($resulto) {
-            echo "Yah";
-            ?>
-            <pre>
-            <?php
-            //print_r($resulto);
-            ?>
-            </pre>
-            <?php
-        }
-        else
-        {
-            echo "No";
-        }
         if (isset($_GET['image'])) {
          $mainImage = $_GET['image'];
         } else {
-         $mainImage = $resulto[3][0];
+         $mainImage = $resulto[5][1];
         }
-        $PathwayToFile = $resulto[3][1];
+        $PathwayToFile = $resulto[5][1];
         // get the dimensions of the main image
-        $imageSize = getimagesize($mainImage)[3];
+        $imageSize = getimagesize($resulto[5][1])[3];
 
         // Keyrir bara ef það er búið að smella á submit 
         if (isset($result)) {
@@ -101,23 +101,28 @@ if (isset($_POST['upload'])) {
             echo '</ul>';
         }
     ?>
-<h1>Please Upload your files here!</h1>
-<form action="" method="POST" enctype="multipart/form-data" id="uploadImage">
-	 <p>
-	 <label for="image">Upload image:</label>
-	 <input type="file" name="image[]" id="image" multiple>
-	 </p>
-	 <p>
-	 <input type="submit" name="upload" id="upload" value="Upload">
-	 </p>
-</form>
-<p><a href="secretpage.php">Another secret page</a> </p>
+<div class="pure-g">
+    <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+        <h1>Please Upload your files here!</h1>
+        <form action="" method="POST" enctype="multipart/form-data" id="uploadImage">
+        	 <p>
+        	 <label for="image">Upload image:</label>
+        	 <input type="file" name="image[]" id="image" multiple>
+        	 </p>
+        	 <p>
+        	 <input type="submit" name="upload" id="upload" value="Upload">
+        	 </p>
+        </form>
+        <p><a href="secretpage.php">Another secret page</a> </p>
 
-<form method="post" action="">
-	 	<input name="logout" type="submit" value="Log out">
-</form>
+        <form method="post" action="">
+        	 	<input name="logout" type="submit" value="Log out">
+        </form>
+    </div>
 
+    
    <main>
+        <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-2-4">
         <h2>Images of Japan</h2>
 
       <p id="picCount">Displaying 1 to 6 of 8</p>
@@ -131,17 +136,32 @@ if (isset($_POST['upload'])) {
                     {
                         $isFirst = ($i == 0);
                         $isLast = ($i == $last);
+                        if ($pos++ % COLS === 0 && !$firstRow) {
+                            echo '</tr><tr>';
+                        }
+                        // once loop begins, this is no longer true
+                        $firstRow = false;
                     ?>
                     <td><a href="<?= $_SERVER['PHP_SELF']; ?>?image=<?= $resulto[$i][1]; ?>"><img src="<?= $resulto[$i][1]; ?>"" alt="<?= $resulto[$i][0]; ?>" width="80" height="54"></a></td>
-                    <?php } ?>
+                    <?php }
+                    while ($pos++ % COLS) {
+                     echo '<td>&nbsp;</td>';
+                    } 
+                    ?>
                 </tr>
                 <!-- Navigation link needs to go here -->
             </table>
+        </div>
+     </div>
+    <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
             <figure id="main_image">
                 <img src="<?= $mainImage; ?>" alt="<?= $mainImage; ?>"<?= $imageSize; ?>>
                 <figcaption><?= $mainImage; ?></figcaption>
             </figure>
-        </div>
+    </div>
     </main>
+    
+</div>
+<?php require './Includes/Footer.php'; ?>
 </body>
 </html>
