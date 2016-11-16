@@ -63,6 +63,7 @@ if (isset($_POST['upload'])) {
         echo $e->getMessage();  # ef við náum ekki að nota Upload class
     }
  }
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -82,14 +83,17 @@ if (isset($_POST['upload'])) {
 </div>
     <?php
         $resulto = $dbUsers->imagelist();
+        $mainImage= 0;
         if (isset($_GET['image'])) {
          $mainImage = $_GET['image'];
+
         } else {
-         $mainImage = $resulto[5][1];
+         $mainImage = $resulto[1][1];
         }
-        $PathwayToFile = $resulto[5][1];
+        $PathwayToFile = $resulto[1][1];
         // get the dimensions of the main image
-        $imageSize = getimagesize($resulto[5][1])[3];
+        $imageSize = getimagesize($mainImage)[3];
+
 
         // Keyrir bara ef það er búið að smella á submit 
         if (isset($result)) {
@@ -99,6 +103,14 @@ if (isset($_POST['upload'])) {
                 echo "<li>$message</li>";
             }
             echo '</ul>';
+        }
+        if (isset($_POST['delete'])) {
+            //fclose($mainImage);
+            try {
+            $Van = $dbUsers->deleteImageInfo($mainImage);
+            } catch (Exception $e) {
+                echo 'Caught exception: ',  $e->getMessage(), "\n";
+            }
         }
     ?>
 <div class="pure-g">
@@ -118,19 +130,23 @@ if (isset($_POST['upload'])) {
         <form method="post" action="">
         	 	<input name="logout" type="submit" value="Log out">
         </form>
+        <form method="post" action="">
+                <input name="delete" type="submit" value="Delete">
+        </form>
     </div>
 
     
    <main>
         <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-2-4">
-        <h2>Images of Japan</h2>
+        <h2>Some Imgs</h2>
 
-      <p id="picCount">Displaying 1 to 6 of 8</p>
+      <p id="picCount">Displaying All</p>
         <div id="gallery">
             <table id="thumbs">
                 <tr>
                     <!--This row needs to be repeated-->
                     <?php
+                    $captionz = substr($mainImage,8,40);
                     $last = count($resulto) - 1;
                     foreach ($resulto as $i => $row)
                     {
@@ -156,7 +172,7 @@ if (isset($_POST['upload'])) {
     <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
             <figure id="main_image">
                 <img src="<?= $mainImage; ?>" alt="<?= $mainImage; ?>"<?= $imageSize; ?>>
-                <figcaption><?= $mainImage; ?></figcaption>
+                <figcaption><?= $captionz; ?></figcaption>
             </figure>
     </div>
     </main>
